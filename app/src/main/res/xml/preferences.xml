@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="plugin_studentlife_audio"
+    android:title="@string/app_name">
+
+    <CheckBoxPreference
+        android:key="status_plugin_studentlife_audio"
+        android:defaultValue="false"
+        android:persistent="true"
+        android:summary="Activate/deactivate plugin" />
+
+</PreferenceScreen>
