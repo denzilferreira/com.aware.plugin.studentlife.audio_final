@@ -56,16 +56,16 @@ bintray {
 
     pkg {
         repo = 'com.awareframework'
-        name = "com.aware.plugin.studentlife.audio"
+        name = android.defaultConfig.applicationId
         licenses = ['Apache-2.0']
-        websiteUrl = 'https://github.com/denzilferreira/com.aware.plugin.studentlife.audio' //EDIT ME
-        issueTrackerUrl = 'https://github.com/denzilferreira/com.aware.plugin.studentlife.audio/issues' //EDIT ME
+        websiteUrl = 'https://github.com/denzilferreira/com.aware.plugin.studentlife.audio_final' //EDIT ME
+        issueTrackerUrl = 'https://github.com/denzilferreira/com.aware.plugin.studentlife.audio_final/issues' //EDIT ME
         labels = ['aar','android','framework','aware']
         publicDownloadNumbers = true
-        vcsUrl = 'https://github.com/denzilferreira/com.aware.plugin.studentlife.audio.git' //EDIT ME
+        vcsUrl = 'https://github.com/denzilferreira/com.aware.plugin.studentlife.audio_final.git' //EDIT ME
         desc = "AWARE Plugin: Conversations" //EDIT ME
         userOrg = user
-        githubRepo = "denzilferreira/com.aware.plugin.studentlife.audio" //EDIT ME
+        githubRepo = "denzilferreira/com.aware.plugin.studentlife.audio_final" //EDIT ME
 
         version {
             name = "$version_readable"
