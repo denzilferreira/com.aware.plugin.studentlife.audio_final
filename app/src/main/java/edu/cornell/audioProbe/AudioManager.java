@@ -501,7 +501,8 @@ public class AudioManager {
                     //appState.convo_inference = "in a converstion";
 
                     Plugin.IN_CONVERSATION = true;
-                    Plugin.sContextProducer.onContext();
+                    if (Plugin.sContextProducer != null)
+                        Plugin.sContextProducer.onContext();
                 }
             } else if (sumOfPreviousInferences < stop_threshold)// thresholdForConversation)
             // //conversation finished
@@ -515,7 +516,8 @@ public class AudioManager {
                 {
 
                     Plugin.IN_CONVERSATION = false;
-                    Plugin.sContextProducer.onContext();
+                    if (Plugin.sContextProducer != null)
+                        Plugin.sContextProducer.onContext();
 
                     // Log.e("CurrentSum From Timer","Intent Sent");
                     conversationIntentSent = true;

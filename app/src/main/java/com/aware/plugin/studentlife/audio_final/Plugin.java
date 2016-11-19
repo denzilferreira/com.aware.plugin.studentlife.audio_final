@@ -131,7 +131,6 @@ public class Plugin extends Aware_Plugin {
 
         Aware.setSetting(this, Settings.STATUS_PLUGIN_STUDENTLIFE_AUDIO, false);
         stopService(audioProbe);
-        Aware.stopPlugin(this, PLUGIN_NAME);
         Aware.stopAWARE();
     }
 
