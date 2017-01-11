@@ -11,11 +11,13 @@
 
         <service
             android:name="com.aware.plugin.studentlife.audio_final.Plugin"
+            android:label="AWARE: Conversations"
             android:exported="true" />
 
         <service
             android:name="edu.dartmouth.studentlife.AudioLib.AudioService"
-            android:exported="true" />
+            android:exported="true"
+            android:label="AWARE: Conversations API"/>
 
         <activity
             android:name="com.aware.plugin.studentlife.audio_final.Settings"
