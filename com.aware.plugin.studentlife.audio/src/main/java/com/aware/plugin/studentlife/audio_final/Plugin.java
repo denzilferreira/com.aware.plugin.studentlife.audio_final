@@ -130,8 +130,11 @@ public class Plugin extends Aware_Plugin {
         super.onDestroy();
 
         Aware.setSetting(this, Settings.STATUS_PLUGIN_STUDENTLIFE_AUDIO, false);
-        stopService(audioProbe);
-        Aware.stopAWARE();
+
+        if (audioProbe != null)
+            stopService(audioProbe);
+
+        Aware.stopAWARE(this);
     }
 
     private int recordFirstOperationInDatabase() {

@@ -89,7 +89,5 @@ dependencies {
     compile "com.android.support:appcompat-v7:${support_libs}"
 //    compile "com.awareframework:aware-core:${aware_libs}@aar"
     compile 'com.github.denzilferreira:aware-client:development-SNAPSHOT'
-    compile "com.koushikdutta.ion:ion:2.1.6"
-    compile "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0"
     compile files('lib/armeabi.jar')
 }
