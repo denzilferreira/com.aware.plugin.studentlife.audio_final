@@ -75,8 +75,14 @@ public class Provider extends ContentProvider {
 
     private static UriMatcher URIMatcher;
     private static HashMap<String, String> databaseMap;
-    private static DatabaseHelper databaseHelper;
+    private static DatabaseHelper dbHelper;
     private static SQLiteDatabase database;
+    private void initialiseDatabase() {
+        if (dbHelper == null)
+            dbHelper = new DatabaseHelper(getContext(), DATABASE_NAME, null, DATABASE_VERSION, DATABASE_TABLES, TABLES_FIELDS);
+        if (database == null)
+            database = dbHelper.getWritableDatabase();
+    }
 
     @Override
     public boolean onCreate() {
@@ -98,36 +104,29 @@ public class Provider extends ContentProvider {
         databaseMap.put(StudentLifeAudio_Data.CONVO_START, StudentLifeAudio_Data.CONVO_START);
         databaseMap.put(StudentLifeAudio_Data.CONVO_END, StudentLifeAudio_Data.CONVO_END);
 
-        return true;
-    }
+        initialiseDatabase();
 
-    private boolean initializeDB() {
-        if (databaseHelper == null) {
-            databaseHelper = new DatabaseHelper(getContext(), DATABASE_NAME, null,
-                    DATABASE_VERSION, DATABASE_TABLES, TABLES_FIELDS);
-        }
-        if (databaseHelper != null && (database == null || !database.isOpen())) {
-            database = databaseHelper.getWritableDatabase();
-        }
-        return (database != null && databaseHelper != null);
+        return true;
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        if (!initializeDB()) {
-            Log.w(Plugin.TAG, "Database unavailable...");
-            return 0;
-        }
+        initialiseDatabase();
 
-        int count = 0;
+        database.beginTransaction();
+
+        int count;
         switch (URIMatcher.match(uri)) {
             case URI_CHECK_AUDIO:
                 count = database.delete(DATABASE_TABLES[0], selection, selectionArgs);
                 break;
             default:
+                database.endTransaction();
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
 
+        database.setTransactionSuccessful();
+        database.endTransaction();
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
     }
@@ -146,18 +145,18 @@ public class Provider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues initialValues) {
-        if (!initializeDB()) {
-            Log.w(Plugin.TAG, "Database unavailable...");
-            return null;
-        }
+        initialiseDatabase();
 
         ContentValues values = (initialValues != null) ? new ContentValues(
                 initialValues) : new ContentValues();
 
+        database.beginTransaction();
+
         switch (URIMatcher.match(uri)) {
             case URI_CHECK_AUDIO:
-                long weather_id = database.insert(DATABASE_TABLES[0], StudentLifeAudio_Data.DEVICE_ID, values);
-
+                long weather_id = database.insertWithOnConflict(DATABASE_TABLES[0], StudentLifeAudio_Data.DEVICE_ID, values, SQLiteDatabase.CONFLICT_IGNORE);
+                database.setTransactionSuccessful();
+                database.endTransaction();
                 if (weather_id > 0) {
                     Uri new_uri = ContentUris.withAppendedId(
                             StudentLifeAudio_Data.CONTENT_URI,
@@ -166,8 +165,10 @@ public class Provider extends ContentProvider {
                             null);
                     return new_uri;
                 }
+                database.endTransaction();
                 throw new SQLException("Failed to insert row into " + uri);
             default:
+                database.endTransaction();
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
     }
@@ -175,10 +176,7 @@ public class Provider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
-        if (!initializeDB()) {
-            Log.w(Plugin.TAG, "Database unavailable...");
-            return null;
-        }
+        initialiseDatabase();
 
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         switch (URIMatcher.match(uri)) {
@@ -205,22 +203,24 @@ public class Provider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        if (!initializeDB()) {
-            Log.w(Plugin.TAG, "Database unavailable...");
-            return 0;
-        }
 
-        int count = 0;
+        initialiseDatabase();
+
+        database.beginTransaction();
+
+        int count;
         switch (URIMatcher.match(uri)) {
             case URI_CHECK_AUDIO:
                 count = database.update(DATABASE_TABLES[0], values, selection,
                         selectionArgs);
                 break;
             default:
-
+                database.endTransaction();
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
 
+        database.setTransactionSuccessful();
+        database.endTransaction();
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
     }
