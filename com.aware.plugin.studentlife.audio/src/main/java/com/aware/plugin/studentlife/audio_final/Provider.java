@@ -75,7 +75,7 @@ public class Provider extends ContentProvider {
 
     private static UriMatcher URIMatcher;
     private static HashMap<String, String> databaseMap;
-    private static DatabaseHelper dbHelper;
+    private DatabaseHelper dbHelper;
     private static SQLiteDatabase database;
     private void initialiseDatabase() {
         if (dbHelper == null)
@@ -103,8 +103,6 @@ public class Provider extends ContentProvider {
         databaseMap.put(StudentLifeAudio_Data.FEATURE_VECTOR, StudentLifeAudio_Data.FEATURE_VECTOR);
         databaseMap.put(StudentLifeAudio_Data.CONVO_START, StudentLifeAudio_Data.CONVO_START);
         databaseMap.put(StudentLifeAudio_Data.CONVO_END, StudentLifeAudio_Data.CONVO_END);
-
-        initialiseDatabase();
 
         return true;
     }
