@@ -112,6 +112,9 @@ public class Plugin extends Aware_Plugin {
                 audioProbe = new Intent(getApplicationContext(), AudioService.class);
                 startService(audioProbe);
             }
+
+            Aware.startAWARE(this);
+
         } else {
             Intent permissions = new Intent(this, PermissionsHandler.class);
             permissions.putExtra(PermissionsHandler.EXTRA_REQUIRED_PERMISSIONS, REQUIRED_PERMISSIONS);

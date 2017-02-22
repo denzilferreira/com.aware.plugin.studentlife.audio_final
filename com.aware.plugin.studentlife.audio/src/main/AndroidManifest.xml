@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.aware.plugin.studentlife.audio_final">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -6,18 +7,18 @@
 
     <application
         android:icon="@drawable/ic_launcher"
-        android:persistent="true"
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        tools:replace="android:icon, android:label">
 
         <service
             android:name="com.aware.plugin.studentlife.audio_final.Plugin"
-            android:label="AWARE: Conversations"
-            android:exported="true" />
+            android:exported="true"
+            android:label="AWARE: Conversations" />
 
         <service
             android:name="edu.dartmouth.studentlife.AudioLib.AudioService"
             android:exported="true"
-            android:label="AWARE: Conversations API"/>
+            android:label="AWARE: Conversations API" />
 
         <activity
             android:name="com.aware.plugin.studentlife.audio_final.Settings"
