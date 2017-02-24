@@ -7,16 +7,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteException;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.providers.Applications_Provider;
-import com.aware.ui.PermissionsHandler;
 import com.aware.utils.Aware_Plugin;
 
 import edu.dartmouth.studentlife.AudioLib.AudioService;
@@ -35,6 +33,8 @@ public class Plugin extends Aware_Plugin {
 
     public static boolean IN_CONVERSATION = false;
     public static ContextProducer sContextProducer;
+
+    private Intent aware;
 
     @Override
     public void onCreate() {
@@ -68,7 +68,8 @@ public class Plugin extends Aware_Plugin {
         TABLES_FIELDS = Provider.TABLES_FIELDS;
         CONTEXT_URIS = new Uri[]{Provider.StudentLifeAudio_Data.CONTENT_URI};
 
-        Aware.startAWARE(this);
+        aware = new Intent(this, Aware.class);
+        startService(aware);
     }
 
     //This function gets called every 5 minutes by AWARE to make sure this plugin is still running.
@@ -122,7 +123,7 @@ public class Plugin extends Aware_Plugin {
         if (audioProbe != null)
             stopService(audioProbe);
 
-        Aware.stopAWARE(this);
+        stopService(aware);
     }
 
     private int recordFirstOperationInDatabase() {
