@@ -16,6 +16,7 @@ import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.providers.Applications_Provider;
 import com.aware.utils.Aware_Plugin;
+import com.aware.utils.PluginsManager;
 
 import edu.dartmouth.studentlife.AudioLib.AudioService;
 
@@ -33,8 +34,6 @@ public class Plugin extends Aware_Plugin {
 
     public static boolean IN_CONVERSATION = false;
     public static ContextProducer sContextProducer;
-
-    private Intent aware;
 
     @Override
     public void onCreate() {
@@ -67,9 +66,6 @@ public class Plugin extends Aware_Plugin {
         DATABASE_TABLES = Provider.DATABASE_TABLES;
         TABLES_FIELDS = Provider.TABLES_FIELDS;
         CONTEXT_URIS = new Uri[]{Provider.StudentLifeAudio_Data.CONTENT_URI};
-
-        aware = new Intent(this, Aware.class);
-        startService(aware);
     }
 
     //This function gets called every 5 minutes by AWARE to make sure this plugin is still running.
@@ -78,6 +74,9 @@ public class Plugin extends Aware_Plugin {
         super.onStartCommand(intent, flags, startId);
 
         if (PERMISSIONS_OK) {
+
+            PluginsManager.enablePlugin(this, "com.aware.plugin.studentlife.audio_final");
+
             //Check if the user has toggled the debug messages
             DEBUG = Aware.getSetting(this, Aware_Preferences.DEBUG_FLAG).equals("true");
 
@@ -109,6 +108,7 @@ public class Plugin extends Aware_Plugin {
                 startService(audioProbe);
             }
 
+            Aware.startAWARE(this);
         }
 
         return START_STICKY;
@@ -123,7 +123,7 @@ public class Plugin extends Aware_Plugin {
         if (audioProbe != null)
             stopService(audioProbe);
 
-        stopService(aware);
+        Aware.stopAWARE(this);
     }
 
     private int recordFirstOperationInDatabase() {
