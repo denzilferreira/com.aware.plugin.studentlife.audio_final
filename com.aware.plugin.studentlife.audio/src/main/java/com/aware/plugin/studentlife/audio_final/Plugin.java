@@ -16,7 +16,6 @@ import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.providers.Applications_Provider;
 import com.aware.utils.Aware_Plugin;
-import com.aware.utils.PluginsManager;
 
 import edu.dartmouth.studentlife.AudioLib.AudioService;
 
