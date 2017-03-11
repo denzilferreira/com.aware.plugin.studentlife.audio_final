@@ -75,8 +75,6 @@ public class Plugin extends Aware_Plugin {
 
         if (PERMISSIONS_OK) {
 
-            PluginsManager.enablePlugin(this, "com.aware.plugin.studentlife.audio_final");
-
             //Check if the user has toggled the debug messages
             DEBUG = Aware.getSetting(this, Aware_Preferences.DEBUG_FLAG).equals("true");
 
@@ -102,12 +100,12 @@ public class Plugin extends Aware_Plugin {
                 }
             }
 
-            //Start AudioService only once
-            if (audioProbe == null) {
+            if (!Aware.is_running(this, AudioService.class)) {
                 audioProbe = new Intent(getApplicationContext(), AudioService.class);
                 startService(audioProbe);
             }
 
+            Aware.startPlugin(this, "com.aware.plugin.studentlife.audio_final");
             Aware.startAWARE(this);
         }
 
