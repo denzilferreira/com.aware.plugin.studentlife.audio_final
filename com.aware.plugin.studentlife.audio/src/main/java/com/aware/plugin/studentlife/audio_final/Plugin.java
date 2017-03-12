@@ -99,12 +99,12 @@ public class Plugin extends Aware_Plugin {
                 }
             }
 
-            if (!Aware.is_running(this, AudioService.class)) {
+            if (audioProbe == null) {
                 audioProbe = new Intent(getApplicationContext(), AudioService.class);
                 startService(audioProbe);
             }
 
-            Aware.startPlugin(this, "com.aware.plugin.studentlife.audio_final");
+            Aware.startPlugin(this, PLUGIN_NAME);
             Aware.startAWARE(this);
         }
 
@@ -117,8 +117,7 @@ public class Plugin extends Aware_Plugin {
 
         Aware.setSetting(this, Settings.STATUS_PLUGIN_STUDENTLIFE_AUDIO, false);
 
-        if (audioProbe != null)
-            stopService(audioProbe);
+        if (audioProbe != null) stopService(audioProbe);
 
         Aware.stopAWARE(this);
     }

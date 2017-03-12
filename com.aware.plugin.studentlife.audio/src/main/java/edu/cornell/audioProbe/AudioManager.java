@@ -420,8 +420,8 @@ public class AudioManager {
 
         mContext.getContentResolver().insert(Provider.StudentLifeAudio_Data.CONTENT_URI, data);
 
-        if (Plugin.DEBUG) {
-            Log.d(Plugin.TAG, "Inference data: " + data.toString());
+        if (Aware.DEBUG) {
+            Log.d(Aware.TAG, "Inference data: " + data.toString());
         }
     }
 
@@ -484,7 +484,7 @@ public class AudioManager {
             final double stop_threshold = 400;
 
             if (!recordingStopped && System.currentTimeMillis() - lastFrameTimeStamp > 5 * 1000) {
-                Log.e(Plugin.TAG, "no audio_final frames in 1000ms, restart");
+                Log.e(Aware.TAG, "no audio_final frames in 1000ms, restart");
                 restartRecording();
             }
             // this code every 10 seconds look how much conversation is present
@@ -497,7 +497,7 @@ public class AudioManager {
                     conversationStartTime = System.currentTimeMillis() - 10 * 1000;
                     inCoversation = true;
                     conversationIntentSent = false;// means send it next time
-                    Log.e(Plugin.TAG, "Starting a conversation");
+                    Log.e(Aware.TAG, "Starting a conversation");
                     //appState.convo_inference = "in a converstion";
 
                     Plugin.IN_CONVERSATION = true;
@@ -524,7 +524,7 @@ public class AudioManager {
                     // vibrateNotification();
 
                     conversationEndTime = System.currentTimeMillis();
-                    Log.e(Plugin.TAG, "Finished a conversation");
+                    Log.e(Aware.TAG, "Finished a conversation");
                     //appState.convo_inference = "not in a converstion";
                     sendConversationInfo(conversationStartTime,
                             conversationEndTime);
@@ -551,8 +551,8 @@ public class AudioManager {
 
         mContext.getContentResolver().insert(Provider.StudentLifeAudio_Data.CONTENT_URI, data);
 
-        if (Plugin.DEBUG) {
-            Log.d(Plugin.TAG, "Conversation data: " + data.toString());
+        if (Aware.DEBUG) {
+            Log.d(Aware.TAG, "Conversation data: " + data.toString());
         }
     }
 
