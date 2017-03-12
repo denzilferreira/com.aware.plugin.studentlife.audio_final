@@ -7,16 +7,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteException;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.providers.Applications_Provider;
-import com.aware.ui.PermissionsHandler;
 import com.aware.utils.Aware_Plugin;
 
 import edu.dartmouth.studentlife.AudioLib.AudioService;
@@ -67,24 +65,15 @@ public class Plugin extends Aware_Plugin {
         DATABASE_TABLES = Provider.DATABASE_TABLES;
         TABLES_FIELDS = Provider.TABLES_FIELDS;
         CONTEXT_URIS = new Uri[]{Provider.StudentLifeAudio_Data.CONTENT_URI};
-
-        //Activate plugin
-        Aware.startPlugin(this, PLUGIN_NAME);
     }
 
     //This function gets called every 5 minutes by AWARE to make sure this plugin is still running.
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, flags, startId);
 
-        boolean permissions_ok = true;
-        for (String p : REQUIRED_PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED) {
-                permissions_ok = false;
-                break;
-            }
-        }
+        if (PERMISSIONS_OK) {
 
-        if (permissions_ok) {
             //Check if the user has toggled the debug messages
             DEBUG = Aware.getSetting(this, Aware_Preferences.DEBUG_FLAG).equals("true");
 
@@ -110,19 +99,16 @@ public class Plugin extends Aware_Plugin {
                 }
             }
 
-            //Start AudioService only once
             if (audioProbe == null) {
                 audioProbe = new Intent(getApplicationContext(), AudioService.class);
                 startService(audioProbe);
             }
-        } else {
-            Intent permissions = new Intent(this, PermissionsHandler.class);
-            permissions.putExtra(PermissionsHandler.EXTRA_REQUIRED_PERMISSIONS, REQUIRED_PERMISSIONS);
-            permissions.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(permissions);
+
+            Aware.startPlugin(this, PLUGIN_NAME);
+            Aware.startAWARE(this);
         }
 
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     @Override
@@ -130,8 +116,10 @@ public class Plugin extends Aware_Plugin {
         super.onDestroy();
 
         Aware.setSetting(this, Settings.STATUS_PLUGIN_STUDENTLIFE_AUDIO, false);
-        stopService(audioProbe);
-        Aware.stopAWARE();
+
+        if (audioProbe != null) stopService(audioProbe);
+
+        Aware.stopAWARE(this);
     }
 
     private int recordFirstOperationInDatabase() {
