@@ -104,7 +104,6 @@ public class Plugin extends Aware_Plugin {
                 startService(audioProbe);
             }
 
-            Aware.startPlugin(this, PLUGIN_NAME);
             Aware.startAWARE(this);
         }
 
