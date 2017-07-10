@@ -58,5 +58,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('lib/armeabi.jar')
     compile "com.android.support:appcompat-v7:$support_libs"
+    compile "com.android.support:gridlayout-v7:$support_libs"
     compile "com.github.denzilferreira:aware-client:$aware_libs"
 }
