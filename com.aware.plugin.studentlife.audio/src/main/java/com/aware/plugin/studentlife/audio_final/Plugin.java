@@ -10,7 +10,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteException;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -62,11 +61,6 @@ public class Plugin extends Aware_Plugin {
 
         //Add permissions you need (Support for Android M) e.g.,
         REQUIRED_PERMISSIONS.add(Manifest.permission.RECORD_AUDIO);
-
-        //To sync data to the server, you'll need to set this variables from your ContentProvider
-        DATABASE_TABLES = Provider.DATABASE_TABLES;
-        TABLES_FIELDS = Provider.TABLES_FIELDS;
-        CONTEXT_URIS = new Uri[]{Provider.StudentLifeAudio_Data.CONTENT_URI};
     }
 
     //This function gets called every 5 minutes by AWARE to make sure this plugin is still running.
