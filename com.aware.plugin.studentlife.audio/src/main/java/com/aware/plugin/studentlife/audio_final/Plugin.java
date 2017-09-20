@@ -39,6 +39,8 @@ public class Plugin extends Aware_Plugin {
     public void onCreate() {
         super.onCreate();
 
+        AUTHORITY = Provider.getAuthority(this);
+
         TAG = "AWARE::" + getResources().getString(R.string.app_name);
 
         //Any active plugin/sensor shares its overall context using broadcasts
