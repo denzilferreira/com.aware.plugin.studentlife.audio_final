@@ -1,2 +1,1 @@
-include ':com.aware.plugin.studentlife.audio'
-//, ':com.aware.plugin.studentlife.audio.lib'
+include ':com.aware.plugin.studentlife.audio', ':com.aware.plugin.studentlife.audio.lib'
