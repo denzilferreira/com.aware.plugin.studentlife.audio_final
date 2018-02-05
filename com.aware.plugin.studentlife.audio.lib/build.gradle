@@ -6,11 +6,12 @@ android {
     buildToolsVersion build_tools
 
     defaultConfig {
-//        applicationId "com.aware.plugin.studentlife.audio_final"
         minSdkVersion minimum_sdk
         targetSdkVersion target_sdk
         versionCode version_code
         versionName version_readable
+
+        resValue "string", "provider_conversations", "com.aware.plugin.studentlife.audio_final.provider.audio_final"
     }
 
     signingConfigs {
@@ -27,6 +28,14 @@ android {
 
     lintOptions {
         abortOnError false
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs += '../com.aware.plugin.studentlife.audio/src/main/java'
+            res.srcDirs += '../com.aware.plugin.studentlife.audio/src/main/res'
+            manifest.srcFile '../com.aware.plugin.studentlife.audio/src/main/AndroidManifest.xml'
+        }
     }
 }
 
@@ -80,7 +89,5 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation files('lib/armeabi.jar')
-    implementation "com.android.support:appcompat-v7:$support_libs"
-    implementation "com.android.support:gridlayout-v7:$support_libs"
-    implementation "com.github.denzilferreira:aware-client:$aware_libs"
+    api "com.github.denzilferreira:aware-client:$aware_libs"
 }

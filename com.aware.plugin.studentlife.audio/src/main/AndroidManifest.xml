@@ -29,9 +29,10 @@
         <provider
             android:name="com.aware.plugin.studentlife.audio_final.Provider"
             android:authorities="${applicationId}.provider.audio_final"
-            android:label="@string/plugin_conversations"
             android:exported="true"
+            android:label="@string/plugin_conversations"
             android:readPermission="com.aware.READ_CONTEXT_DATA"
+            android:syncable="true"
             android:writePermission="com.aware.WRITE_CONTEXT_DATA" />
 
         <service
@@ -40,7 +41,9 @@
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
-            <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/sync_conversations" />
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_conversations" />
         </service>
 
     </application>

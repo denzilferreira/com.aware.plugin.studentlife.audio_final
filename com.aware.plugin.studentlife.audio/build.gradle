@@ -11,6 +11,9 @@ android {
         targetSdkVersion target_sdk
         versionCode version_code
         versionName version_readable
+
+        resValue "string", "provider_conversations", android.defaultConfig.applicationId + ".provider.audio_final"
+
     }
 
     signingConfigs {
@@ -57,7 +60,5 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation files('lib/armeabi.jar')
-    implementation "com.android.support:appcompat-v7:$support_libs"
-    implementation "com.android.support:gridlayout-v7:$support_libs"
-    implementation "com.github.denzilferreira:aware-client:$aware_libs"
+    api "com.github.denzilferreira:aware-client:$aware_libs"
 }
