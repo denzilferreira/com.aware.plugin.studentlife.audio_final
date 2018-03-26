@@ -1,9 +1,5 @@
 package edu.cornell.audioProbe;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.media.AudioFormat;
@@ -14,11 +10,14 @@ import android.util.Log;
 
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
-
-import edu.dartmouth.studentlife.AudioLib.AudioUtil;
-
 import com.aware.plugin.studentlife.audio_final.Plugin;
 import com.aware.plugin.studentlife.audio_final.Provider;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+
+import edu.dartmouth.studentlife.AudioLib.AudioUtil;
 import edu.dartmouthcs.UtilLibs.MyDataTypeConverter;
 
 public class AudioManager {
@@ -839,24 +838,29 @@ public class AudioManager {
      * prepare().
      */
     public void start() {
-        if (state == State.READY) {
-            if (rUncompressed) {
-                audioFeatureExtractionInit();
-                aRecorder.startRecording();
-                aRecorder.read(buffer, 0, buffer.length);
-                recordingStopped = false;
-                freeCMemoryActivated = false;
+        try {
+            if (state == State.READY) {
+                if (rUncompressed) {
+                    audioFeatureExtractionInit();
+                    aRecorder.startRecording();
+                    aRecorder.read(buffer, 0, buffer.length);
+                    recordingStopped = false;
+                    freeCMemoryActivated = false;
+                } else {
+                    mRecorder.start();
+                }
+                state = State.RECORDING;
             } else {
-                mRecorder.start();
+                Log.e(AudioManager.class.getName(),
+                        "start() called on illegal state");
+                state = State.ERROR;
             }
-            state = State.RECORDING;
-        } else {
-            Log.e(AudioManager.class.getName(),
-                    "start() called on illegal state");
+
+            Log.d("AudioManager", "start");
+        } catch (IllegalStateException e) {
+            Log.e(AudioManager.class.getName(), "start() called on illegal state");
             state = State.ERROR;
         }
-
-        Log.d("AudioManager", "start");
     }
 
     /**
