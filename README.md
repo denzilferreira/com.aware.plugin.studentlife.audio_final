@@ -28,7 +28,7 @@ timestamp | REAL | unix timestamp in milliseconds of sample
 device_id | TEXT | AWARE device ID
 datatype | INTEGER |    identifier for what is in blob_feature: 0 = voice/noise and volume, 1 = audio features, 2 = conversations.
 double_energy | REAL |  amplitude of audio sample (L2-norm of the audio frame)
-inference | INTEGER |   0 = silence, 1 = noise, 2 = voice, 3 = unknown 
+inference | INTEGER |   0 = silence, 1 = noise, 2 = voice, 3 = unknown
 blob_feature | BLOB |   audio raw sample. not stored by default (would be huge!)
-double_convo_start | REAL | UNIX timestamp of beginning of sample
-double_convo_end | REAL |   UNIX timestamp of ending of sample
+double_convo_start | REAL | UNIX timestamp of beginning of sample (if datatype = 2)
+double_convo_end | REAL |   UNIX timestamp of ending of sample (if datatype = 2)
