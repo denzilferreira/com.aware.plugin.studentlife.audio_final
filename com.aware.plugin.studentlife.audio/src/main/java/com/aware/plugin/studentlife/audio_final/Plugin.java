@@ -87,8 +87,6 @@ public class Plugin extends Aware_Plugin {
                         .setExtras(new Bundle()).build();
                 ContentResolver.requestSync(request);
             }
-
-            Aware.startAWARE(this);
         }
 
         return START_STICKY;
@@ -108,7 +106,5 @@ public class Plugin extends Aware_Plugin {
         Aware.setSetting(this, Settings.STATUS_PLUGIN_STUDENTLIFE_AUDIO, false);
 
         if (audioProbe != null) stopService(audioProbe);
-
-        Aware.stopAWARE(this);
     }
 }
