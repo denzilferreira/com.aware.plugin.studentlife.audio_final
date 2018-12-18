@@ -3,7 +3,6 @@ package com.aware.plugin.studentlife.audio_final;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -12,7 +11,7 @@ import com.aware.Aware;
 
 public class Settings extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    //Plugin settings in XML @xml/preferences
+    //Plugin settings in XML @xml/preferences_conversations
     public static final String STATUS_PLUGIN_STUDENTLIFE_AUDIO = "status_plugin_studentlife_audio";
 
     //Plugin settings UI elements
@@ -21,7 +20,7 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.preferences);
+        addPreferencesFromResource(R.xml.preferences_conversations);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
     }
