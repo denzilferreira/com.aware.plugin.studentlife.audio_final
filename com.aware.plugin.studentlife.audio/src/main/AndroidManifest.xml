@@ -18,6 +18,7 @@
 
         <activity
             android:name="com.aware.plugin.studentlife.audio_final.Settings"
+            android:label="AWARE: Conversation"
             android:exported="true" />
 
         <provider

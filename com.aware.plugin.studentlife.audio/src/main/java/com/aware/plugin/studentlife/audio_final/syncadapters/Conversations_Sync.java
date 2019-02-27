@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 
 import com.aware.plugin.studentlife.audio_final.Provider;
 import com.aware.syncadapters.AwareSyncAdapter;
@@ -33,7 +32,6 @@ public class Conversations_Sync extends Service {
         }
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return sSyncAdapter.getSyncAdapterBinder();

@@ -8,8 +8,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
 import com.aware.Aware;
+import com.aware.ui.AppCompatPreferenceActivity;
 
-public class Settings extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class Settings extends AppCompatPreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     //Plugin settings in XML @xml/preferences_conversations
     public static final String STATUS_PLUGIN_STUDENTLIFE_AUDIO = "status_plugin_studentlife_audio";

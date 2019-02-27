@@ -51,32 +51,8 @@ android {
     }
 }
 
-allprojects {
-    repositories {
-        jcenter()
-    }
-}
-
-if (System.getenv("storeFile") != null && System.getenv("storePassword") != null && System.getenv("keyAlias") != null && System.getenv("keyPassword") != null) {
-    android.signingConfigs.release.storeFile = file(System.getenv("storeFile"))
-    android.signingConfigs.release.storePassword = System.getenv("storePassword")
-    android.signingConfigs.release.keyAlias = System.getenv("keyAlias")
-    android.signingConfigs.release.keyPassword = System.getenv("keyPassword")
-} else {
-    println("No keystore defined. Unsigned!")
-    android.buildTypes.release.signingConfig = null
-}
-
-configurations.all {
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-}
-
-repositories {
-    maven { url "https://jitpack.io" }
-}
-
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    compileOnly fileTree(include: ['*.jar'], dir: 'lib')
     implementation files('lib/armeabi.jar')
-    api "com.github.denzilferreira:aware-client:$aware_libs"
+    api project(":aware-core")
 }
