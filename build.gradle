@@ -1,27 +1,2 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-apply from: 'aware-core/aware.gradle'
-
-buildscript {
-    repositories {
-        maven {
-            url 'https://maven.google.com'
-        }
-        google()
-        jcenter()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
-    }
-}
-
-allprojects {
-    repositories {
-        maven {
-            url 'https://maven.google.com'
-        }
-        google()
-        jcenter()
-        mavenCentral()
-    }
-}
+apply from: '/aware-core/aware.gradle'
