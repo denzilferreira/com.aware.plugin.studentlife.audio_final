@@ -38,7 +38,6 @@ public class AudioService extends Service {
 
     private Handler mHandler = new Handler();
 
-
     private boolean enableDutyCycle = true;
 
     public long audio_no_of_records;
@@ -55,7 +54,11 @@ public class AudioService extends Service {
         audio_no_of_records = 0;
         CONTEXT = this;
 
-        Log.e("AudioService", "AudioService Created!!");
+        inConversationDelay = Integer.parseInt(Aware.getSetting(this, Settings.PLUGIN_CONVERSATIONS_DELAY)) * 60 * 1000; //how long we wait listening until we classify
+        inDutyCycleOff = Integer.parseInt(Aware.getSetting(this, Settings.PLUGIN_CONVERSATIONS_OFF_DUTY)) * 60 * 1000; //how long to wait until we sample again
+        audioDutyCyclingSensingInterval = Integer.parseInt(Aware.getSetting(this, Settings.PLUGIN_CONVERSATIONS_LENGTH)) * 60 * 1000; //how long we sample
+
+        Log.e("AudioService", "AudioService Created!!" + "\nDelay: " + inConversationDelay + ", offduty: "+ inDutyCycleOff + ", recording for:" + audioDutyCyclingSensingInterval);
     }
 
     public static Context getContext() {
@@ -78,7 +81,6 @@ public class AudioService extends Service {
 
             t = new Thread() {
                 public void run() {
-                    // AccelerometerManager.startListening(accelServ);
                     startAudioRecording();
                 }
             };

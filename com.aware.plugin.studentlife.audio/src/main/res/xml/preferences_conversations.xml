@@ -4,9 +4,39 @@
     android:title="@string/app_name">
 
     <CheckBoxPreference
-        android:key="status_plugin_studentlife_audio"
         android:defaultValue="false"
+        android:key="status_plugin_studentlife_audio"
         android:persistent="true"
-        android:summary="Activate/deactivate plugin" />
+        android:summary="Activate/deactivate plugin"
+        android:title="Detect conversations" />
+
+    <EditTextPreference
+        android:defaultValue="1"
+        android:dependency="status_plugin_studentlife_audio"
+        android:inputType="number"
+        android:key="plugin_conversations_delay"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="How long we wait until we start classification (in minutes)"
+        android:title="Delay period" />
+
+    <EditTextPreference
+        android:defaultValue="3"
+        android:dependency="status_plugin_studentlife_audio"
+        android:inputType="number"
+        android:key="plugin_conversations_off_duty"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="How long we wait until we sample again (in minutes)"
+        android:title="Time between samples" />
+    <EditTextPreference
+        android:defaultValue="1"
+        android:dependency="status_plugin_studentlife_audio"
+        android:inputType="number"
+        android:key="plugin_conversations_length"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="For how long we collect data for (in minutes, >= delay period)"
+        android:title="Recording length" />
 
 </PreferenceScreen>

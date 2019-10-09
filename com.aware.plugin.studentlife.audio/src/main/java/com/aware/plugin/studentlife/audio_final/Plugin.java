@@ -12,6 +12,8 @@ import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.utils.Aware_Plugin;
 
+import java.util.Set;
+
 import edu.dartmouth.studentlife.AudioLib.AudioService;
 
 public class Plugin extends Aware_Plugin {
@@ -68,6 +70,15 @@ public class Plugin extends Aware_Plugin {
 
             //Initialize our plugin's settings
             Aware.setSetting(this, Settings.STATUS_PLUGIN_STUDENTLIFE_AUDIO, true);
+
+            if (Aware.getSetting(this, Settings.PLUGIN_CONVERSATIONS_DELAY).length() == 0)
+                Aware.setSetting(this, Settings.PLUGIN_CONVERSATIONS_DELAY, 1);
+
+            if (Aware.getSetting(this, Settings.PLUGIN_CONVERSATIONS_OFF_DUTY).length() == 0)
+                Aware.setSetting(this, Settings.PLUGIN_CONVERSATIONS_OFF_DUTY, 3);
+
+            if (Aware.getSetting(this, Settings.PLUGIN_CONVERSATIONS_LENGTH).length() == 0)
+                Aware.setSetting(this, Settings.PLUGIN_CONVERSATIONS_LENGTH, 1);
 
             if (audioProbe == null) {
                 audioProbe = new Intent(getApplicationContext(), AudioService.class);
