@@ -51,8 +51,4 @@ android {
     }
 }
 
-dependencies {
-    compileOnly fileTree(include: ['*.jar'], dir: 'lib')
-    implementation files('lib/armeabi.jar')
-    api project(":aware-core")
-}
+apply from: '../dependencies.gradle'
