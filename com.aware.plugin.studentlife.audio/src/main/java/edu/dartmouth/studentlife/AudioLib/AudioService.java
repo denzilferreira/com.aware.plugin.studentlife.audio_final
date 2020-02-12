@@ -108,8 +108,7 @@ public class AudioService extends Service {
             return START_NOT_STICKY;
         }
 
-        // starting the recording
-        startAudioManager();
+        if (isMicrophoneAvailable(getContext())) startAudioManager();
 
         // duty cycling code
         if (enableAudioDutyCycling) {
@@ -127,6 +126,28 @@ public class AudioService extends Service {
         // We want this service to continue running until it is explicitly
         // stopped, so return sticky.
         return START_STICKY;
+    }
+
+    /**
+     * Check if the microphone is available or not
+     * @param context
+     * @return
+     */
+    public static boolean isMicrophoneAvailable(Context context) {
+        MediaRecorder recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+        recorder.setOutputFile(new File(context.getCacheDir(), "MediaUtil#micAvailTestFile").getAbsolutePath());
+        boolean available = true;
+        try {
+            recorder.prepare();
+            recorder.start();
+        } catch (Exception exception) {
+            available = false;
+        }
+        recorder.release();
+        return available;
     }
 
     // final int inConversationDelay = 10 * 1000;
