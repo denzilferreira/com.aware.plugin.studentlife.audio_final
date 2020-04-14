@@ -35,6 +35,7 @@ android {
             java.srcDirs += '../com.aware.plugin.studentlife.audio/src/main/java'
             res.srcDirs += '../com.aware.plugin.studentlife.audio/src/main/res'
             manifest.srcFile '../com.aware.plugin.studentlife.audio/src/main/AndroidManifest.xml'
+            jniLibs.srcDirs = ['libs']
         }
     }
 
